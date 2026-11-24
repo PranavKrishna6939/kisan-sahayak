@@ -1,0 +1,85 @@
+# Multilingual Speech Configuration — Indic-Transcribe Flex (STT) + Maya 2 Native (TTS) + Silero VAD
+
+vad:
+  confidence: 0.62        # Sensitive, natural human speech detection (zero clipped/missed words)
+  start_secs: 0.14        # Fast onset so short 1-word answers & opening syllables register cleanly
+  stop_secs: 0.75         # Comfortable pause tolerance so farmers are not cut off mid-sentence
+  min_volume: 0.30        # Captures soft-spoken words cleanly (barge-in echo is gated client-side while bot speaks)
+
+stt:
+  model_id: "bodhan-ai/indic-transcribe-flex"
+  mode: "native"          # Native script output for direct LLM + Maya 2 Native alignment
+  sample_rate: 16000
+  min_speech_ms: 280      # Ignore accidental micro-clicks/pops
+  max_segment_secs: 28.0  # Safe window under 30s FastConformer limit
+
+tts:
+  model_id: "maya-research/maya2-native"
+  sample_rate: 24000
+  default_voice: "Vaidehi"
+  normalize: true
+  voices:
+    - id: "Vaidehi"
+      label: "Vaidehi (Calm Female)"
+      gender: "female"
+      style: "Warm, calm, gentle — ideal for rural farmer guidance"
+    - id: "Jahnavi"
+      label: "Jahnavi (Friendly Female)"
+      gender: "female"
+      style: "Warm, friendly adult voice across 11 Indic languages"
+    - id: "Ahana"
+      label: "Ahana (Bright Female)"
+      gender: "female"
+      style: "Clear, bright youthful female voice"
+    - id: "Satvik"
+      label: "Satvik (Friendly Male)"
+      gender: "male"
+      style: "Warm, approachable male counselor voice"
+    - id: "Siddhant"
+      label: "Siddhant (Clear Male)"
+      gender: "male"
+      style: "Clear, steady professional male voice"
+    - id: "Vasant"
+      label: "Vasant (Mature Male)"
+      gender: "male"
+      style: "Mature, reassuring narrator voice"
+
+# Maps all 27 Bodhan AI Indic-Transcribe-Flex language codes to display names & Maya 2 Native TTS codes (12 native)
+languages:
+  hi:  { name: "Hindi",        native: "हिन्दी",     tts_lang: "hi" }
+  en:  { name: "English",      native: "English",    tts_lang: "en" }
+  bn:  { name: "Bengali",      native: "বাংলা",       tts_lang: "bn" }
+  te:  { name: "Telugu",       native: "తెలుగు",     tts_lang: "te" }
+  mr:  { name: "Marathi",      native: "मराठी",      tts_lang: "mr" }
+  ta:  { name: "Tamil",        native: "தமிழ்",      tts_lang: "ta" }
+  gu:  { name: "Gujarati",     native: "ગુજરાતી",    tts_lang: "gu" }
+  kn:  { name: "Kannada",      native: "ಕನ್ನಡ",      tts_lang: "kn" }
+  ml:  { name: "Malayalam",    native: "മലയാളം",     tts_lang: "ml" }
+  or:  { name: "Odia",         native: "ଓଡ଼ିଆ",      tts_lang: "or" }
+  pa:  { name: "Punjabi",      native: "ਪੰਜਾਬੀ",     tts_lang: "pa" }
+  as:  { name: "Assamese",     native: "অসমীয়া",     tts_lang: "as" }
+  # Extended regional Indian languages & dialects -> graceful TTS routing
+  bho: { name: "Bhojpuri",     native: "भोजपुरी",    tts_lang: "hi" }
+  mai: { name: "Maithili",     native: "मैथिली",     tts_lang: "hi" }
+  hne: { name: "Chhattisgarhi",native: "छत्तीसगढ़ी",  tts_lang: "hi" }
+  bgc: { name: "Haryanvi",     native: "हरियाणवी",   tts_lang: "hi" }
+  bhb: { name: "Bhili",        native: "भीली",       tts_lang: "hi" }
+  doi: { name: "Dogri",        native: "डोगरी",      tts_lang: "hi" }
+  ne:  { name: "Nepali",       native: "नेपाली",     tts_lang: "hi" }
+  sa:  { name: "Sanskrit",     native: "संस्कृतम्",  tts_lang: "hi" }
+  brx: { name: "Bodo",         native: "बड़ो",        tts_lang: "hi" }
+  sat: { name: "Santali",      native: "संताली",     tts_lang: "hi" }
+  kok: { name: "Konkani",      native: "कोंकणी",     tts_lang: "mr" }
+  ur:  { name: "Urdu",         native: "उर्दू / اردو", tts_lang: "hi" }
+  ks:  { name: "Kashmiri",     native: "कश्मीरी",    tts_lang: "hi" }
+  sd:  { name: "Sindhi",       native: "सिंधी",      tts_lang: "hi" }
+  mni: { name: "Manipuri",     native: "মণিপুরী",    tts_lang: "bn" }
+
+# Opening greetings for Outbound vs Inbound call modes (default Hindi-English welcoming opener; adapts immediately to farmer's reply)
+greetings:
+  outbound:
+    hi: "नमस्ते जी, मैं किसान सहायक से बोल रही हूँ। मैं आपको कम ब्याज वाली सरकारी कृषि ऋण योजनाओं की जानकारी देने के लिए कॉल कर रही हूँ। क्या आप अभी दो मिनट बात करने के लिए खाली हैं?"
+    en: "Namaste! I am calling from Kisan Sahayak to share information about low-interest government agricultural loan schemes for farmers. Are you free for two minutes to talk?"
+  inbound:
+    hi: "नमस्ते जी, किसान सहायक में आपका स्वागत है। आप अपनी किसी भी भाषा में बात कर सकते हैं। बताइए, आप किस तरह की खेती या पशुपालन करते हैं और आपको किस चीज़ के लिए लोन की जानकारी चाहिए?"
+    en: "Namaste! Welcome to Kisan Sahayak. You can speak in any Indian language or English. What kind of farming or livestock work do you do, and what loan or scheme can I help you with today?"

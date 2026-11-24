@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: "Plus Jakarta Sans", "Noto Sans Devanagari", "Noto Sans", system-ui, -apple-system, sans-serif;
+  }
+}
+
+@keyframes fieldFlash {
+  0% {
+    background-color: rgba(27, 94, 63, 0.16);
+    border-color: rgba(27, 94, 63, 0.55);
+    box-shadow: 0 0 0 3px rgba(27, 94, 63, 0.14);
+  }
+  100% {
+    background-color: #ffffff;
+    border-color: #e2e0da;
+    box-shadow: 0 0 0 0 rgba(27, 94, 63, 0);
+  }
+}
+
+.animate-field-flash {
+  animation: fieldFlash 2.2s ease-out;
+}
+
+@keyframes orbBreathe {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.45;
+  }
+  50% {
+    transform: scale(1.12);
+    opacity: 0.2;
+  }
+}
+
+.animate-orb-breathe {
+  animation: orbBreathe 2.8s ease-in-out infinite;
+}
+
+/* Minimal custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #d9d6ce;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #bcb8ad;
+}
